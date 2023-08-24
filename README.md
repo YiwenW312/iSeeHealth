@@ -1,4 +1,4 @@
-# iSeeHealth - A Health Management System by Yiwen Wang
+# iSeeHealth - A Health Management System
 
 **Final Project for CS5004 Object Oriented Design and Analysis Summer 2023**
 
