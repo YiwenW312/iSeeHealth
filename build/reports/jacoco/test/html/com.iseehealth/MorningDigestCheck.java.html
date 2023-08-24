@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MorningDigestCheck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">MorningDigestCheck.java</span></div><h1>MorningDigestCheck.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+package com.iseehealth;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.control.Button;
+
+/**
+ * Class MorningDigestCheck is to create a morning digest check class
+ */
+public class MorningDigestCheck implements Check {
+
+  //Variables
+  private final boolean isDiarrhea;
+  private final boolean isStomachache;
+  private final boolean isIntestinalPain;
+  private final boolean isSourRegurgitation;
+  private final boolean isFetidBreath;
+  private final boolean isVomit;
+  private final String otherSymptoms;
+  /**
+   * This is a button to go back to the main page.
+   */
+  public Button iSeeHealthButton;
+  /**
+   * This is a button to submit the input.
+   */
+  public Button submitButton;
+  /**
+   * This is a button to reset the input.
+   */
+  public Button resetButton;
+
+
+  /**
+   * This is a constructor for MorningDigestCheck.
+   *
+   * @param isDiarrhea          is a boolean value.
+   * @param isStomachache       is a boolean value.
+   * @param isIntestinalPain    is a boolean value.
+   * @param isSourRegurgitation is a boolean value.
+   * @param isFetidBreath       is a boolean value.
+   * @param isVomit             is a boolean value.
+   * @param otherSymptoms       is a string value.
+   */
+  public MorningDigestCheck(boolean isDiarrhea, boolean isStomachache, boolean isIntestinalPain,
+<span class="fc" id="L61">      boolean isSourRegurgitation, boolean isFetidBreath, boolean isVomit, String otherSymptoms) {</span>
+<span class="fc" id="L62">    this.isDiarrhea = isDiarrhea;</span>
+<span class="fc" id="L63">    this.isStomachache = isStomachache;</span>
+<span class="fc" id="L64">    this.isIntestinalPain = isIntestinalPain;</span>
+<span class="fc" id="L65">    this.isSourRegurgitation = isSourRegurgitation;</span>
+<span class="fc" id="L66">    this.isFetidBreath = isFetidBreath;</span>
+<span class="fc" id="L67">    this.isVomit = isVomit;</span>
+<span class="fc" id="L68">    this.otherSymptoms = otherSymptoms;</span>
+<span class="fc" id="L69">  }</span>
+
+
+  /**
+   * This method is to update or append to csv file.
+   */
+  @Override
+  public void updateOrAppendToCSV() {
+<span class="fc" id="L77">    List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+
+    try {
+<span class="fc" id="L80">      lines = Files.readAllLines(Paths.get(Constants.MORNING_DIGEST_CHECK_CSV));</span>
+<span class="nc" id="L81">    } catch (IOException e) {</span>
+<span class="nc" id="L82">      System.out.println(&quot;Error reading from file&quot;);</span>
+<span class="nc" id="L83">      e.printStackTrace();</span>
+<span class="fc" id="L84">    }</span>
+
+<span class="fc" id="L86">    String newEntry = toCSV();</span>
+<span class="fc" id="L87">    boolean updated = false;</span>
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">    for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L90">      String[] values = lines.get(i).split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">      if (values[0].equals(LocalDate.now().toString())) { // assuming date is the first value in csv</span>
+<span class="nc" id="L92">        lines.set(i, newEntry); // replace old data</span>
+<span class="nc" id="L93">        updated = true;</span>
+<span class="nc" id="L94">        break;</span>
+      }
+    }
+
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">    if (!updated) {</span>
+<span class="fc" id="L99">      lines.add(newEntry); // if no entry was found for today's date, append new data</span>
+    }
+
+<span class="fc" id="L102">    try (BufferedWriter bw = new BufferedWriter(</span>
+        new FileWriter(Constants.MORNING_DIGEST_CHECK_CSV))) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">      for (String line : lines) {</span>
+<span class="fc" id="L105">        bw.write(line);</span>
+<span class="fc" id="L106">        bw.newLine();</span>
+<span class="fc" id="L107">      }</span>
+<span class="nc" id="L108">    } catch (IOException e) {</span>
+<span class="nc" id="L109">      System.out.println(&quot;Error writing to file&quot;);</span>
+<span class="nc" id="L110">      e.printStackTrace();</span>
+<span class="fc" id="L111">    }</span>
+<span class="fc" id="L112">  }</span>
+
+  /**
+   * This method is to convert the data to csv format.
+   *
+   * @return string with above data
+   */
+  @Override
+  public String toCSV() {
+<span class="fc" id="L121">    return String.join(&quot;,&quot;,</span>
+<span class="fc" id="L122">        LocalDate.now().toString(),</span>
+<span class="fc" id="L123">        Boolean.toString(isDiarrhea),</span>
+<span class="fc" id="L124">        Boolean.toString(isStomachache),</span>
+<span class="fc" id="L125">        Boolean.toString(isIntestinalPain),</span>
+<span class="fc" id="L126">        Boolean.toString(isSourRegurgitation),</span>
+<span class="fc" id="L127">        Boolean.toString(isFetidBreath),</span>
+<span class="fc" id="L128">        Boolean.toString(isVomit),</span>
+        otherSymptoms
+    );
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

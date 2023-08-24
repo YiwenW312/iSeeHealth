@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">ReportGenerator.java</span></div><h1>ReportGenerator.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+package com.iseehealth;
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * This class is to generate reports.
+ */
+<span class="nc" id="L25">public class ReportGenerator {</span>
+
+  /**
+   * This method is formatting report.
+   *
+   * @param result result
+   * @param type   type
+   * @return report
+   */
+  public static String formatReport(Map&lt;String, Integer&gt; result, String type) {
+<span class="fc" id="L35">    StringBuilder combinedReport = new StringBuilder();</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">    if (&quot;fitness&quot;.equals(type)) {</span>
+<span class="fc" id="L37">      combinedReport.append(&quot;Fitness Goal Days:\n&quot;);</span>
+<span class="fc" id="L38">      combinedReport.append(&quot;Aerobic: &quot;).append(result.getOrDefault(&quot;Aerobic&quot;, 0))</span>
+<span class="fc" id="L39">          .append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L40">      combinedReport.append(&quot;Mobility: &quot;).append(result.getOrDefault(&quot;Mobility&quot;, 0))</span>
+<span class="fc" id="L41">          .append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L42">      combinedReport.append(&quot;Strength: &quot;).append(result.getOrDefault(&quot;Strength&quot;, 0))</span>
+<span class="fc" id="L43">          .append(&quot; days;\n\n&quot;);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">    } else if (&quot;diet&quot;.equals(type)) {</span>
+<span class="fc" id="L45">      combinedReport.append(&quot;Diet Goal Days:\n&quot;);</span>
+<span class="fc" id="L46">      combinedReport.append(&quot;Carbs: &quot;).append(result.getOrDefault(&quot;CarbGoalDays&quot;, 0))</span>
+<span class="fc" id="L47">          .append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L48">      combinedReport.append(&quot;Fat: &quot;).append(result.getOrDefault(&quot;FatGoalDays&quot;, 0))</span>
+<span class="fc" id="L49">          .append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L50">      combinedReport.append(&quot;Protein: &quot;).append(result.getOrDefault(&quot;ProteinGoalDays&quot;, 0))</span>
+<span class="fc" id="L51">          .append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L52">      combinedReport.append(&quot;\nNo Vegetable Days &quot;)</span>
+<span class="fc" id="L53">          .append(result.getOrDefault(&quot;NoVegetableDays&quot;, 0)).append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L54">      combinedReport.append(&quot;Having too much Sugar! Total: &quot;)</span>
+<span class="fc" id="L55">          .append(result.getOrDefault(&quot;TooMuchSugarDays&quot;, 0)).append(&quot; days;\n&quot;);</span>
+<span class="fc" id="L56">      combinedReport.append(&quot;Having too much Snack! Total: &quot;)</span>
+<span class="fc" id="L57">          .append(result.getOrDefault(&quot;TooMuchSnackDays&quot;, 0)).append(&quot; days;\n&quot;);</span>
+    }
+<span class="fc" id="L59">    return combinedReport.toString();</span>
+  }
+
+  /**
+   * This method is to generate weekly diet report.
+   *
+   * @param csvData csvData
+   * @return report
+   * @throws Exception exception
+   */
+  public static Map&lt;String, Integer&gt; generate7DayDietReport(String csvData) throws Exception {
+<span class="nc" id="L70">    return generateDietReport(csvData, 7);</span>
+  }
+
+  /**
+   * This method is to generate monthly diet report.
+   *
+   * @param csvData csvData
+   * @return report
+   * @throws Exception exception
+   */
+  public static Map&lt;String, Integer&gt; generate30DayDietReport(String csvData) throws Exception {
+<span class="nc" id="L81">    return generateDietReport(csvData, 30);</span>
+  }
+
+  /**
+   * This method is to generate diet report.
+   *
+   * @param filepath filepath
+   * @param days     days
+   * @return report
+   * @throws Exception exception
+   */
+  private static Map&lt;String, Integer&gt; generateDietReport(String filepath, int days)
+      throws Exception {
+<span class="nc" id="L94">    List&lt;String&gt; lines = Files.readAllLines(Paths.get(filepath));</span>
+
+    //String line;
+<span class="nc" id="L97">    LocalDate endDate = LocalDate.now();</span>
+<span class="nc" id="L98">    LocalDate startDate = endDate.minusDays(days - 1);</span>
+
+<span class="nc" id="L100">    int proteinGoalDays = 0;</span>
+<span class="nc" id="L101">    int fatGoalDays = 0;</span>
+<span class="nc" id="L102">    int carbGoalDays = 0;</span>
+<span class="nc" id="L103">    int noVegetableDays = 0;</span>
+<span class="nc" id="L104">    int sugarDays = 0;</span>
+<span class="nc" id="L105">    int snackDays = 0;</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">    for (int i = 1; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L108">      String line = lines.get(i);</span>
+<span class="nc" id="L109">      String[] columns = line.split(&quot;,&quot;);</span>
+<span class="nc" id="L110">      LocalDate date = LocalDate.parse(columns[Constants.DATE_COLUMN]);</span>
+
+<span class="nc bnc" id="L112" title="All 4 branches missed.">      if (date.isAfter(endDate) || date.isBefore(startDate)) {</span>
+<span class="nc" id="L113">        continue;</span>
+      }
+
+<span class="nc" id="L116">      double protein = Double.parseDouble(columns[Constants.PROTEIN_COLUMN]);</span>
+<span class="nc" id="L117">      double fat = Double.parseDouble(columns[Constants.FAT_COLUMN]);</span>
+<span class="nc" id="L118">      double carbs = Double.parseDouble(columns[Constants.CARBOHYDRATE_COLUMN]);</span>
+<span class="nc" id="L119">      boolean isVegetable = columns[Constants.VEGETABLE_COLUMN].equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="nc" id="L120">      boolean isSugar = columns[Constants.SUGAR_COLUMN].equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="nc" id="L121">      boolean isSugarBeverage = columns[Constants.SUGAR_BEVERAGE_COLUMN].equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="nc" id="L122">      boolean isIceCream = columns[Constants.ICE_CREAM_COLUMN].equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="nc" id="L123">      boolean isSnack = columns[Constants.SNACK_COLUMN].equalsIgnoreCase(&quot;true&quot;);</span>
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">      if (protein &gt;= Constants.PROTEIN_GOAL) {</span>
+<span class="nc" id="L126">        proteinGoalDays++;</span>
+      }
+<span class="nc bnc" id="L128" title="All 2 branches missed.">      if (fat &lt;= Constants.FAT_GOAL) {</span>
+<span class="nc" id="L129">        fatGoalDays++;</span>
+      }
+<span class="nc bnc" id="L131" title="All 2 branches missed.">      if (carbs &lt;= Constants.CARBOHYDRATE_GOAL) {</span>
+<span class="nc" id="L132">        carbGoalDays++;</span>
+      }
+<span class="nc bnc" id="L134" title="All 2 branches missed.">      if (!isVegetable) {</span>
+<span class="nc" id="L135">        noVegetableDays++;</span>
+      }
+<span class="nc bnc" id="L137" title="All 6 branches missed.">      if (isSugar || isSugarBeverage || isIceCream) {</span>
+<span class="nc" id="L138">        sugarDays++;</span>
+      }
+<span class="nc bnc" id="L140" title="All 2 branches missed.">      if (isSnack) {</span>
+<span class="nc" id="L141">        snackDays++;</span>
+      }
+    }
+
+<span class="nc" id="L145">    Map&lt;String, Integer&gt; report = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L146">    report.put(&quot;ProteinGoalDays&quot;, proteinGoalDays);</span>
+<span class="nc" id="L147">    report.put(&quot;FatGoalDays&quot;, fatGoalDays);</span>
+<span class="nc" id="L148">    report.put(&quot;CarbGoalDays&quot;, carbGoalDays);</span>
+<span class="nc" id="L149">    report.put(&quot;NoVegetableDays&quot;, noVegetableDays);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">    if (days == Constants.WEEKLY_DAYS_COUNT) {</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">      report.put(&quot;TooMuchSugarDays&quot;, sugarDays &gt; Constants.WEEKLY_TOO_MUCH_SUGAR ? sugarDays : 0);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">      report.put(&quot;TooMuchSnackDays&quot;, snackDays &gt; Constants.WEEKLY_TOO_MUCH_SNACK ? snackDays : 0);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    } else if (days == Constants.MONTHLY_DAYS_COUNT) {</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">      report.put(&quot;TooMuchSugarDays&quot;, sugarDays &gt; Constants.MONTHLY_TOO_MUCH_SUGAR ? sugarDays : 0);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">      report.put(&quot;TooMuchSnackDays&quot;, snackDays &gt; Constants.MONTHLY_TOO_MUCH_SNACK ? snackDays : 0);</span>
+    }
+
+<span class="nc" id="L158">    return report;</span>
+  }
+
+  /**
+   * This method is to generate fitness report.
+   *
+   * @param days days
+   * @return report
+   * @throws IOException exception
+   */
+  public static Map&lt;String, Integer&gt; generateFitnessReport(int days) throws IOException {
+<span class="nc" id="L169">    Map&lt;LocalDate, List&lt;Integer&gt;&gt; data = fitnessCSVData();</span>
+<span class="nc" id="L170">    LocalDate today = LocalDate.now();</span>
+
+<span class="nc" id="L172">    int aerobicGoalDaysCount = 0;</span>
+<span class="nc" id="L173">    int strengthGoalDaysCount = 0;</span>
+<span class="nc" id="L174">    int mobilityGoalDaysCount = 0;</span>
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">    for (int i = 0; i &lt; days; i++) {</span>
+<span class="nc" id="L177">      LocalDate dayToCheck = today.minusDays(i);</span>
+<span class="nc" id="L178">      List&lt;Integer&gt; dayData = data.getOrDefault(dayToCheck, List.of(0, 0, 0));</span>
+
+<span class="nc bnc" id="L180" title="All 2 branches missed.">      if (dayData.get(0) &gt;= Constants.AEROBIC_GOAL) {</span>
+<span class="nc" id="L181">        aerobicGoalDaysCount++;</span>
+      }
+<span class="nc bnc" id="L183" title="All 2 branches missed.">      if (dayData.get(1) &gt;= Constants.STRENGTH_GOAL) {</span>
+<span class="nc" id="L184">        strengthGoalDaysCount++;</span>
+      }
+<span class="nc bnc" id="L186" title="All 2 branches missed.">      if (dayData.get(2) &gt;= Constants.MOBILITY_GOAL) {</span>
+<span class="nc" id="L187">        mobilityGoalDaysCount++;</span>
+      }
+    }
+
+<span class="nc" id="L191">    Map&lt;String, Integer&gt; goalDayCounts = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L192">    goalDayCounts.put(&quot;Aerobic&quot;, aerobicGoalDaysCount);</span>
+<span class="nc" id="L193">    goalDayCounts.put(&quot;Strength&quot;, strengthGoalDaysCount);</span>
+<span class="nc" id="L194">    goalDayCounts.put(&quot;Mobility&quot;, mobilityGoalDaysCount);</span>
+
+<span class="nc" id="L196">    return goalDayCounts;</span>
+  }
+
+  /**
+   * This method is to get fitness csv data.
+   *
+   * @return data
+   * @throws IOException exception
+   */
+  private static Map&lt;LocalDate, List&lt;Integer&gt;&gt; fitnessCSVData() throws IOException {
+<span class="nc" id="L206">    List&lt;String&gt; lines = Files.readAllLines(Paths.get(Constants.FITNESS_CHECK_CSV));</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">    if (lines.isEmpty()) {</span>
+<span class="nc" id="L208">      throw new IllegalArgumentException(&quot;CSV file is empty or not formatted correctly.&quot;);</span>
+    }
+
+<span class="nc" id="L211">    return lines.stream()</span>
+<span class="nc" id="L212">        .skip(1)</span>
+<span class="nc" id="L213">        .map(line -&gt; line.split(&quot;,&quot;))</span>
+<span class="nc" id="L214">        .collect(Collectors.toMap(</span>
+<span class="nc" id="L215">            tokens -&gt; LocalDate.parse(tokens[0]),</span>
+<span class="nc" id="L216">            tokens -&gt; List.of(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),</span>
+<span class="nc" id="L217">                Integer.parseInt(tokens[3]))</span>
+        ));
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DietCheckController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">DietCheckController.java</span></div><h1>DietCheckController.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+
+package com.iseehealth;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+
+/**
+ * This class is to create a diet check controller to handle the input of diet check.
+ */
+<span class="nc" id="L21">public class DietCheckController extends Controllers {</span>
+
+  /**
+   * This is a button to go back to the main page.
+   */
+    public Button iSeeHealthButton;
+    /**
+     * This is a button to go to morning check page.
+   */
+  public Button morningCheckButton;
+  /**
+   * This is a button to go to fitness check page.
+   */
+  public Button fitnessCheckButton;
+  /**
+   * This is a button to go to submit the input.
+   */
+  public Button submitButton;
+  /**
+   * This is a button to reset the input.
+   */
+  public Button resetButton;
+  //Variables
+  @FXML
+  private TextField proteinTextField;
+  @FXML
+  private TextField fatTextField;
+  @FXML
+  private TextField carbsTextField;
+  @FXML
+  private CheckBox vegetableCheckbox;
+  @FXML
+  private CheckBox fruitCheckbox;
+  @FXML
+  private CheckBox sugarCheckBox;
+  @FXML
+  private CheckBox sugarBeverageCheckBox;
+  @FXML
+  private CheckBox iceCreamCheckBox;
+  @FXML
+  private CheckBox snackCheckBox;
+  @FXML
+  private TextField snackNameTextField;
+
+
+  /**
+   * This method is to handle the submit button action.
+   */
+  @FXML
+  public void handleSubmitButtonAction() {
+    //Validate input
+<span class="nc bnc" id="L72" title="All 2 branches missed.">    if (validateInput()) {</span>
+<span class="nc" id="L73">      showErrorMessage();</span>
+<span class="nc" id="L74">      return;</span>
+    }
+
+    //Get input
+<span class="nc" id="L78">    String protein = proteinTextField.getText();</span>
+<span class="nc" id="L79">    String fat = fatTextField.getText();</span>
+<span class="nc" id="L80">    String carbs = carbsTextField.getText();</span>
+<span class="nc" id="L81">    boolean vegetable = vegetableCheckbox.isSelected();</span>
+<span class="nc" id="L82">    boolean fruit = fruitCheckbox.isSelected();</span>
+<span class="nc" id="L83">    boolean sugar = sugarCheckBox.isSelected();</span>
+<span class="nc" id="L84">    boolean sugarBeverage = sugarBeverageCheckBox.isSelected();</span>
+<span class="nc" id="L85">    boolean iceCream = iceCreamCheckBox.isSelected();</span>
+<span class="nc" id="L86">    boolean snack = snackCheckBox.isSelected();</span>
+<span class="nc" id="L87">    String snackName = snackNameTextField.getText();</span>
+
+    //Convert input
+<span class="nc" id="L90">    int proteinPercentage = Integer.parseInt(protein);</span>
+<span class="nc" id="L91">    int fatPercentage = Integer.parseInt(fat);</span>
+<span class="nc" id="L92">    int carbohydratePercentage = Integer.parseInt(carbs);</span>
+
+    //Check if the sum of percentage is 100
+<span class="nc bnc" id="L95" title="All 2 branches missed.">    if (proteinPercentage + fatPercentage + carbohydratePercentage != 100) {</span>
+<span class="nc" id="L96">      showErrorMessage();</span>
+<span class="nc" id="L97">      return;</span>
+    } else {
+<span class="nc" id="L99">      DietCheck dietCheck = new DietCheck(proteinPercentage, fatPercentage, carbohydratePercentage,</span>
+          vegetable, fruit,
+          sugar, sugarBeverage, iceCream, snack, snackName);
+<span class="nc" id="L102">      dietCheck.updateOrAppendToCSV();</span>
+    }
+
+<span class="nc" id="L105">    clearInput();</span>
+
+<span class="nc" id="L107">  }</span>
+
+  /**
+   * This method is to handle the reset button action.
+   */
+  @FXML
+  public void handleResetButtonAction() {
+<span class="nc" id="L114">    clearInput();</span>
+<span class="nc" id="L115">  }</span>
+
+  /**
+   * This method is to validate the input.
+   *
+   * @return true if the input is valid, false if the input is invalid.
+   */
+  @Override
+  public boolean validateInput() {
+<span class="nc bnc" id="L124" title="All 4 branches missed.">    return proteinTextField.getText().isEmpty() || isNumeric(proteinTextField.getText())</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        || fatTextField.getText().isEmpty() || isNumeric(fatTextField.getText())</span>
+<span class="nc bnc" id="L126" title="All 4 branches missed.">        || carbsTextField.getText().isEmpty() || isNumeric(carbsTextField.getText());</span>
+  }
+
+  /**
+   * This method is to clear the input.
+   */
+  @Override
+  public void clearInput() {
+<span class="nc" id="L134">    proteinTextField.setText(&quot;&quot;);</span>
+<span class="nc" id="L135">    fatTextField.setText(&quot;&quot;);</span>
+<span class="nc" id="L136">    carbsTextField.setText(&quot;&quot;);</span>
+<span class="nc" id="L137">    vegetableCheckbox.setSelected(false);</span>
+<span class="nc" id="L138">    fruitCheckbox.setSelected(false);</span>
+<span class="nc" id="L139">    sugarCheckBox.setSelected(false);</span>
+<span class="nc" id="L140">    sugarBeverageCheckBox.setSelected(false);</span>
+<span class="nc" id="L141">    iceCreamCheckBox.setSelected(false);</span>
+<span class="nc" id="L142">    snackCheckBox.setSelected(false);</span>
+<span class="nc" id="L143">    snackNameTextField.setText(&quot;&quot;);</span>
+<span class="nc" id="L144">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

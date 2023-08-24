@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Controllers.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">Controllers.java</span></div><h1>Controllers.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+
+package com.iseehealth;
+
+import java.io.IOException;
+import java.util.Objects;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+/**
+ * This class is to create a controller for all the scenes.
+ */
+<span class="nc" id="L27">public class Controllers {</span>
+
+  /**
+   * This is a button to go back to the main page.
+   */
+  public Button iSeeHealthButton;
+  /**
+   * This is a button to morning check page.
+   */
+  public Button morningCheckButton;
+  /**
+   * This is a button to fitness check page.
+   */
+  public Button fitnessCheckButton;
+  /**
+   * This is a button to diet check page.
+   */
+  public Button dietCheckButton;
+  /**
+   * This is a button to mental check page.
+   */
+  public Button mentalCheckButton;
+  /**
+   * This is a button to go to exit program.
+   */
+  public Button exitButton;
+  /**
+   * This is a button to go to weekly report.
+   */
+  public Button weeklyReportButton;
+  /**
+   * This is a button to go to monthly report.
+   */
+  public Button monthlyReportButton;
+  /**
+   * This is stage
+   */
+  protected Stage stage;
+  /**
+   * This is scene
+   */
+  protected Scene scene;
+
+  /**
+   * This method is to validate the input.
+   *
+   * @return boolean
+   */
+  boolean validateInput() {
+<span class="nc" id="L76">    return true;</span>
+  }
+
+  /**
+   * This method is to clear the input.
+   */
+  void clearInput() {
+
+<span class="nc" id="L84">  }</span>
+
+  /**
+   * This method is to show the error message.
+   */
+  public void showErrorMessage() {
+<span class="nc" id="L90">    Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L91">    alert.setTitle(&quot;Error&quot;);</span>
+<span class="nc" id="L92">    alert.setHeaderText(&quot;Invalid Input&quot;);</span>
+<span class="nc" id="L93">    alert.setContentText(&quot;Please enter valid input&quot;);</span>
+<span class="nc" id="L94">    alert.showAndWait();</span>
+<span class="nc" id="L95">  }</span>
+
+  /**
+   * This method is to check if the string is numeric.
+   *
+   * @param str the string to be checked
+   * @return boolean
+   */
+  boolean isNumeric(String str) {
+<span class="nc bnc" id="L104" title="All 6 branches missed.">    return str == null || str.isEmpty() || !str.matches(&quot;\\d*&quot;);</span>
+  }
+
+  /**
+   * This method is to switch to the dashboard2 scene.
+   *
+   * @param event the event of clicking the button iSeeHealth
+   * @throws IOException the exception to input and output
+   */
+  public void switchToDashboard2(ActionEvent event) throws IOException {
+<span class="nc" id="L114">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L115">        Objects.requireNonNull(getClass().getResource(Constants.DASHBOARD2_FXML)));</span>
+<span class="nc" id="L116">    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L117">    scene = new Scene(root);</span>
+<span class="nc" id="L118">    stage.setScene(scene);</span>
+<span class="nc" id="L119">    stage.show();</span>
+<span class="nc" id="L120">  }</span>
+
+  /**
+   * This method is to switch to the morning check scene.
+   * @param event2 the event of clicking the button Morning Check
+   * @throws IOException the exception to input and output
+   */
+  public void switchToMorningCheck(ActionEvent event2) throws IOException {
+<span class="nc" id="L128">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L129">        Objects.requireNonNull(getClass().getResource(Constants.MORNING_BASIC_SKIN_CHECK_FXML)));</span>
+<span class="nc" id="L130">    stage = (Stage) ((Node) event2.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L131">    scene = new Scene(root);</span>
+<span class="nc" id="L132">    stage.setScene(scene);</span>
+<span class="nc" id="L133">    stage.show();</span>
+<span class="nc" id="L134">  }</span>
+
+  /**
+   * This method is to switch to the fitness check scene.
+   *
+   * @param event3 the event of clicking the button Fitness Check
+   * @throws IOException the exception to input and output
+   */
+  public void switchToFitnessCheck(ActionEvent event3) throws IOException {
+<span class="nc" id="L143">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L144">        Objects.requireNonNull(getClass().getResource(Constants.FITNESS_CHECK_FXML)));</span>
+<span class="nc" id="L145">    stage = (Stage) ((Node) event3.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L146">    scene = new Scene(root);</span>
+<span class="nc" id="L147">    stage.setScene(scene);</span>
+<span class="nc" id="L148">    stage.show();</span>
+<span class="nc" id="L149">  }</span>
+
+  /**
+   * This method is to switch to the diet check scene.
+   *
+   * @param event4 the event of clicking the button Diet Check
+   * @throws IOException the exception to input and output
+   */
+  public void switchToDietCheck(ActionEvent event4) throws IOException {
+<span class="nc" id="L158">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L159">        Objects.requireNonNull(getClass().getResource(Constants.DIET_CHECK_FXML)));</span>
+<span class="nc" id="L160">    stage = (Stage) ((Node) event4.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L161">    scene = new Scene(root);</span>
+<span class="nc" id="L162">    stage.setScene(scene);</span>
+<span class="nc" id="L163">    stage.show();</span>
+<span class="nc" id="L164">  }</span>
+
+  /**
+   * This method is to switch to the mental check scene.
+   *
+   * @param event5 the event of clicking the button Mental Check
+   * @throws IOException the exception to input and output
+   */
+  public void switchToMentalCheck(ActionEvent event5) throws IOException {
+<span class="nc" id="L173">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L174">        Objects.requireNonNull(getClass().getResource(Constants.MENTAL_CHECK_FXML)));</span>
+<span class="nc" id="L175">    stage = (Stage) ((Node) event5.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L176">    scene = new Scene(root);</span>
+<span class="nc" id="L177">    stage.setScene(scene);</span>
+<span class="nc" id="L178">    stage.show();</span>
+<span class="nc" id="L179">  }</span>
+
+  /**
+   * This method is to switch to the weekly report scene.
+   *
+   * @param event6 the event of clicking the button Weekly Report
+   * @throws IOException the exception to input and output
+   */
+  public void switchToWeeklyReport(ActionEvent event6) throws IOException {
+<span class="nc" id="L188">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L189">        Objects.requireNonNull(getClass().getResource(Constants.WEEKLY_REPORT_FXML)));</span>
+<span class="nc" id="L190">    stage = (Stage) ((Node) event6.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L191">    scene = new Scene(root);</span>
+<span class="nc" id="L192">    stage.setScene(scene);</span>
+<span class="nc" id="L193">    stage.show();</span>
+<span class="nc" id="L194">  }</span>
+
+  /**
+   * This method is to switch to the monthly report scene.
+   *
+   * @param event7 the event of clicking the button Monthly Report
+   * @throws IOException the exception to input and output
+   */
+  public void switchToMonthlyReport(ActionEvent event7) throws IOException {
+<span class="nc" id="L203">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L204">        Objects.requireNonNull(getClass().getResource(Constants.MONTHLY_REPORT_FXML)));</span>
+<span class="nc" id="L205">    stage = (Stage) ((Node) event7.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L206">    scene = new Scene(root);</span>
+<span class="nc" id="L207">    stage.setScene(scene);</span>
+<span class="nc" id="L208">    stage.show();</span>
+<span class="nc" id="L209">  }</span>
+
+  /**
+   * This method is to switch to the morning pain check scene.
+   *
+   * @param event8 the event of clicking the button next
+   * @throws IOException the exception to input and output
+   */
+  public void switchToMorningPainCheck(ActionEvent event8) throws IOException {
+<span class="nc" id="L218">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L219">        Objects.requireNonNull(getClass().getResource(Constants.MORNING_PAIN_CHECK_FXML)));</span>
+<span class="nc" id="L220">    stage = (Stage) ((Node) event8.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L221">    scene = new Scene(root);</span>
+<span class="nc" id="L222">    stage.setScene(scene);</span>
+<span class="nc" id="L223">    stage.show();</span>
+<span class="nc" id="L224">  }</span>
+
+  /**
+   * This method is to switch to the morning digest check scene.
+   *
+   * @param event8 the event of clicking the button next
+   * @throws IOException the exception to input and output
+   */
+  public void switchToMorningDigestCheck(ActionEvent event8) throws IOException {
+<span class="nc" id="L233">    Parent root = FXMLLoader.load(</span>
+<span class="nc" id="L234">        Objects.requireNonNull(getClass().getResource(Constants.MORNING_DIGEST_CHECK_FXML)));</span>
+<span class="nc" id="L235">    stage = (Stage) ((Node) event8.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L236">    scene = new Scene(root);</span>
+<span class="nc" id="L237">    stage.setScene(scene);</span>
+<span class="nc" id="L238">    stage.show();</span>
+<span class="nc" id="L239">  }</span>
+
+  /**
+   * This method is to close the window.
+   *
+   * @param e the event of clicking the button exit
+   * @throws IOException the exception to input and output
+   */
+  public void closeWindow(ActionEvent e) throws IOException {
+<span class="nc" id="L248">    System.exit(0);</span>
+<span class="nc" id="L249">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

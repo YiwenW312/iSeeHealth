@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MorningBasicSkinCheck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">MorningBasicSkinCheck.java</span></div><h1>MorningBasicSkinCheck.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+package com.iseehealth;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.control.Button;
+
+/**
+ * Class MorningBasicSkinCheck is to create a morning basic skin check class
+ */
+public class MorningBasicSkinCheck implements Check {
+
+  //Variables
+  private final int weight;
+  private final String bloodPressure;
+  private final boolean isRedness;
+  private final boolean isSwelling;
+
+  private final boolean isAcne;
+
+  private final boolean isScar;
+  private final boolean isItching;
+  private final String isOtherSkin;
+  /**
+   * Buttons
+   */
+  public Button iSeeHealthButton;
+
+
+  /**
+   * Constructor for MorningBasicSkinCheck
+   *
+   * @param weight        weight kg
+   * @param bloodPressure blood pressure ###/##
+   * @param isRedness     is redness
+   * @param isSwelling    is swelling
+   * @param isAcne        is acne
+   * @param isScar        is scar
+   * @param isItching     is itching
+   * @param isOtherSkin   is other skin
+   */
+  public MorningBasicSkinCheck(int weight, String bloodPressure, boolean isRedness,
+<span class="nc" id="L57">      boolean isSwelling, boolean isAcne, boolean isScar, boolean isItching, String isOtherSkin) {</span>
+<span class="nc" id="L58">    this.weight = weight;</span>
+<span class="nc" id="L59">    this.bloodPressure = bloodPressure;</span>
+<span class="nc" id="L60">    this.isRedness = isRedness;</span>
+<span class="nc" id="L61">    this.isSwelling = isSwelling;</span>
+<span class="nc" id="L62">    this.isAcne = isAcne;</span>
+<span class="nc" id="L63">    this.isScar = isScar;</span>
+<span class="nc" id="L64">    this.isItching = isItching;</span>
+<span class="nc" id="L65">    this.isOtherSkin = isOtherSkin;</span>
+<span class="nc" id="L66">  }</span>
+
+
+  /**
+   * This method is to update or append to csv file.
+   */
+  @Override
+  public void updateOrAppendToCSV() {
+<span class="nc" id="L74">    List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+
+    try {
+<span class="nc" id="L77">      lines = Files.readAllLines(Paths.get(Constants.MORNING_BASIC_SKIN_CHECK_CSV));</span>
+<span class="nc" id="L78">    } catch (IOException e) {</span>
+<span class="nc" id="L79">      System.out.println(&quot;Error reading from file&quot;);</span>
+<span class="nc" id="L80">      e.printStackTrace();</span>
+<span class="nc" id="L81">    }</span>
+
+<span class="nc" id="L83">    String newEntry = toCSV();</span>
+<span class="nc" id="L84">    boolean updated = false;</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">    for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L87">      String[] values = lines.get(i).split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">      if (values[0].equals(LocalDate.now().toString())) { // assuming date is the first value in csv</span>
+<span class="nc" id="L89">        lines.set(i, newEntry); // replace old data</span>
+<span class="nc" id="L90">        updated = true;</span>
+<span class="nc" id="L91">        break;</span>
+      }
+    }
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">    if (!updated) {</span>
+<span class="nc" id="L96">      lines.add(newEntry); // if no entry was found for today's date, append new data</span>
+    }
+
+<span class="nc" id="L99">    try (BufferedWriter bw = new BufferedWriter(</span>
+        new FileWriter(Constants.MORNING_BASIC_SKIN_CHECK_CSV))) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">      for (String line : lines) {</span>
+<span class="nc" id="L102">        bw.write(line);</span>
+<span class="nc" id="L103">        bw.newLine();</span>
+<span class="nc" id="L104">      }</span>
+<span class="nc" id="L105">    } catch (IOException e) {</span>
+<span class="nc" id="L106">      System.out.println(&quot;Error writing to file&quot;);</span>
+<span class="nc" id="L107">      e.printStackTrace();</span>
+<span class="nc" id="L108">    }</span>
+<span class="nc" id="L109">  }</span>
+
+  /**
+   * This method is to convert the input to csv format.
+   *
+   * @return the input in csv format.
+   */
+  @Override
+  public String toCSV() {
+<span class="nc" id="L118">    return String.join(&quot;,&quot;,</span>
+<span class="nc" id="L119">        LocalDate.now().toString(),</span>
+<span class="nc" id="L120">        String.valueOf(weight),</span>
+        bloodPressure,
+<span class="nc" id="L122">        String.valueOf(isRedness),</span>
+<span class="nc" id="L123">        String.valueOf(isSwelling),</span>
+<span class="nc" id="L124">        String.valueOf(isAcne),</span>
+<span class="nc" id="L125">        String.valueOf(isScar),</span>
+<span class="nc" id="L126">        String.valueOf(isItching),</span>
+        isOtherSkin);
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

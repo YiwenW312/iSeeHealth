@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Constants.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">Constants.java</span></div><h1>Constants.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+
+
+package com.iseehealth;
+
+/**
+ * Constants for the program
+ */
+<span class="nc" id="L17">public class Constants {</span>
+  /**
+   * Constants for the CSV files dietCheck.csv
+   */
+<span class="fc" id="L21">  public static String DIET_CHECK_CSV = &quot;dietCheck.csv&quot;;</span>
+  /**
+   * Constants for the CSV files painCheck.csv
+   */
+<span class="fc" id="L25">  public static String MORNING_PAIN_CHECK_CSV = &quot;painCheck.csv&quot;;</span>
+  /**
+   * Constants for the CSV files digestCheck.csv
+   */
+<span class="fc" id="L29">  public static String MORNING_DIGEST_CHECK_CSV = &quot;digestCheck.csv&quot;;</span>
+  /**
+   * Constants for the CSV files basicSkinCheck.csv
+   */
+<span class="fc" id="L33">  public static String MORNING_BASIC_SKIN_CHECK_CSV = &quot;basicSkinCheck.csv&quot;;</span>
+  /**
+   * Constants for the CSV files mentalCheck.csv
+   */
+<span class="fc" id="L37">  public static String MENTAL_CHECK_CSV = &quot;mentalCheck.csv&quot;;</span>
+  /**
+   * Constants for the CSV files fitnessCheck.csv
+   */
+<span class="fc" id="L41">  public static String FITNESS_CHECK_CSV = &quot;fitnessCheck.csv&quot;;</span>
+
+  /**
+   * Constants for the FXML files dashboard
+   */
+  public static final String DASHBOARD_FXML = &quot;Dashboard.fxml&quot;;
+  /**
+   * Constants for the FXML files dashboard2
+   */
+  public static final String DASHBOARD2_FXML = &quot;Dashboard2.fxml&quot;;
+  /**
+   * Constants for the FXML files morning check
+   */
+  public static final String MORNING_PAIN_CHECK_FXML = &quot;MorningCheck-Pain.fxml&quot;;
+  /**
+   * Constants for the FXML files morning check
+   */
+  public static final String MORNING_DIGEST_CHECK_FXML = &quot;MorningCheck-Digest.fxml&quot;;
+  /**
+   * Constants for the FXML files morning check
+   */
+  public static final String MORNING_BASIC_SKIN_CHECK_FXML = &quot;MorningCheck-BasicSkin.fxml&quot;;
+  /**
+   * Constants for the FXML files diet check
+   */
+  public static final String DIET_CHECK_FXML = &quot;DietCheck.fxml&quot;;
+  /**
+   * Constants for the FXML files mental check
+   */
+  public static final String MENTAL_CHECK_FXML = &quot;MentalCheck.fxml&quot;;
+  /**
+   * Constants for the FXML files fitness check
+   */
+  public static final String FITNESS_CHECK_FXML = &quot;FitnessCheck.fxml&quot;;
+  /**
+   * Constants for the FXML files weekly report
+   */
+  public static final String WEEKLY_REPORT_FXML = &quot;WeeklyReport.fxml&quot;;
+  /**
+   * Constants for the FXML files monthly report
+   */
+  public static final String MONTHLY_REPORT_FXML = &quot;MonthlyReport.fxml&quot;;
+  /**
+   * Constants for goals
+   */
+  public static final int PROTEIN_GOAL = 30;
+  /**
+   * Constants for goals FAT
+   */
+  public static final int FAT_GOAL = 30;
+  /**
+   * Constants for goals CARBS
+   */
+  public static final int CARBOHYDRATE_GOAL = 40;
+  /**
+   * Constants for goals SUGAR weekly
+   */
+  public static final int WEEKLY_TOO_MUCH_SUGAR = 3;
+  /**
+   * Constants for goals SNACK weekly
+   */
+  public static final int WEEKLY_TOO_MUCH_SNACK = 3;
+  /**
+   * Constants for goals SUGAR Monthly
+   */
+  public static final int MONTHLY_TOO_MUCH_SUGAR = 10;
+  /**
+   * Constants for goals SNACK Monthly
+   */
+  public static final int MONTHLY_TOO_MUCH_SNACK = 10;
+
+
+  /**
+   * Constants for the fitness report AEROBIC GOAL
+   */
+  public static final int AEROBIC_GOAL = 20;
+  /**
+   * Constants for the fitness report STRENGTH GOAL
+   */
+  public static final int STRENGTH_GOAL = 20;
+  /**
+   * Constants for the fitness report MOBILITY GOAL
+   */
+  public static final int MOBILITY_GOAL = 10;
+
+  /**
+   * Days count week
+   */
+  public static final int WEEKLY_DAYS_COUNT = 7;
+  /**
+   * Days count month
+   */
+  public static final int MONTHLY_DAYS_COUNT = 30;
+
+  /**
+   * Constants for the CSV columns DATE
+   */
+  public static final int DATE_COLUMN = 0;
+  /**
+   * Constants for the CSV columns PROTEIN
+   */
+  public static final int PROTEIN_COLUMN = 1;
+  /**
+   * Constants for the CSV columns FAT
+   */
+  public static final int FAT_COLUMN = 2;
+  /**
+   * Constants for the CSV columns
+   */
+  public static final int CARBOHYDRATE_COLUMN = 3;
+  /**
+   * Constants for the CSV columns VEGETABLE
+   */
+  public static final int VEGETABLE_COLUMN = 4;
+  /**
+   * Constants for the CSV columns FRUIT
+   */
+  public static final int FRUIT_COLUMN = 5;
+  /**
+   * Constants for the CSV columns SUGAR
+   */
+  public static final int SUGAR_COLUMN = 6;
+  /**
+   * Constants for the CSV columns SUGAR BEVERAGE
+   */
+  public static final int SUGAR_BEVERAGE_COLUMN = 7;
+  /**
+   * Constants for the CSV columns ICE CREAM
+   */
+  public static final int ICE_CREAM_COLUMN = 8;
+  /**
+   * Constants for the CSV columns SNACK
+   */
+  public static final int SNACK_COLUMN = 9;
+  /**
+   * Constants for the CSV columns SNACK NAME
+   */
+  public static final int SNACK_NAME_COLUMN = 10;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

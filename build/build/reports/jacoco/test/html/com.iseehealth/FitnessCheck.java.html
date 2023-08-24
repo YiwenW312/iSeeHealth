@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FitnessCheck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">FitnessCheck.java</span></div><h1>FitnessCheck.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+
+package com.iseehealth;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * This class is to create a fitness check object and write the data to the csv file.
+ */
+public class FitnessCheck implements Check {
+
+  //Variables
+  private final int aerobicMinutes;
+  private final int strengthMinutes;
+  private final int mobilityMinutes;
+
+  /**
+   * This method is to get the aerobic minutes.
+   *
+   * @param aerobicMinutes  the aerobic minutes.
+   * @param strengthMinutes the weight lifting minutes.
+   * @param mobilityMinutes the mobility minutes.
+   */
+<span class="nc" id="L39">  public FitnessCheck(int aerobicMinutes, int strengthMinutes, int mobilityMinutes) {</span>
+<span class="nc" id="L40">    this.aerobicMinutes = aerobicMinutes;</span>
+<span class="nc" id="L41">    this.strengthMinutes = strengthMinutes;</span>
+<span class="nc" id="L42">    this.mobilityMinutes = mobilityMinutes;</span>
+<span class="nc" id="L43">  }</span>
+
+  /**
+   * This method is to update or append the data to the csv file.
+   */
+  @Override
+  public void updateOrAppendToCSV() {
+<span class="nc" id="L50">    List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+
+    try {
+<span class="nc" id="L53">      lines = Files.readAllLines(Paths.get(Constants.FITNESS_CHECK_CSV));</span>
+<span class="nc" id="L54">    } catch (IOException e) {</span>
+<span class="nc" id="L55">      System.out.println(&quot;Error reading from file&quot;);</span>
+<span class="nc" id="L56">      e.printStackTrace();</span>
+<span class="nc" id="L57">    }</span>
+
+<span class="nc" id="L59">    String newEntry = toCSV();</span>
+<span class="nc" id="L60">    boolean updated = false;</span>
+
+<span class="nc bnc" id="L62" title="All 2 branches missed.">    for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L63">      String[] values = lines.get(i).split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">      if (values[0].equals(LocalDate.now().toString())) { // assuming date is the first value in csv</span>
+<span class="nc" id="L65">        lines.set(i, newEntry); // replace old data</span>
+<span class="nc" id="L66">        updated = true;</span>
+<span class="nc" id="L67">        break;</span>
+      }
+    }
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">    if (!updated) {</span>
+<span class="nc" id="L72">      lines.add(newEntry); // if no entry was found for today's date, append new data</span>
+    }
+
+<span class="nc" id="L75">    try (BufferedWriter bw = new BufferedWriter(new FileWriter(Constants.FITNESS_CHECK_CSV))) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">      for (String line : lines) {</span>
+<span class="nc" id="L77">        bw.write(line);</span>
+<span class="nc" id="L78">        bw.newLine();</span>
+<span class="nc" id="L79">      }</span>
+<span class="nc" id="L80">    } catch (IOException e) {</span>
+<span class="nc" id="L81">      System.out.println(&quot;Error writing to file&quot;);</span>
+<span class="nc" id="L82">      e.printStackTrace();</span>
+<span class="nc" id="L83">    }</span>
+<span class="nc" id="L84">  }</span>
+
+  /**
+   * This method is to convert the data to csv format.
+   *
+   * @return the data in csv format.
+   */
+  @Override
+  public String toCSV() {
+<span class="nc" id="L93">    return String.join(&quot;,&quot;, LocalDate.now().toString(),</span>
+<span class="nc" id="L94">        String.valueOf(aerobicMinutes),</span>
+<span class="nc" id="L95">        String.valueOf(strengthMinutes),</span>
+<span class="nc" id="L96">        String.valueOf(mobilityMinutes));</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

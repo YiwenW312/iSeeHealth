@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MorningPainCheck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iSeeHealth</a> &gt; <a href="index.source.html" class="el_package">com.iseehealth</a> &gt; <span class="el_source">MorningPainCheck.java</span></div><h1>MorningPainCheck.java</h1><pre class="source lang-java linenums">/**
+ * This program is to create a health management system including morning checks(basic, skin, pain,
+ * allergy), diet check, mental check and fitness check.Diet check and fitness check's inputs will
+ * be used to generate weekly reports and monthly reports. This project uses JavaFX, Gradle and
+ * Intellij IDEA.
+ *
+ * @YiwenW312 Yiwen Wang
+ * @since 2023-08-10
+ */
+package com.iseehealth;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class DietCheck is to create a pain check class
+ */
+public class MorningPainCheck implements Check {
+
+  //Variables
+  private final boolean isNeck;
+  private final boolean isHeadache;
+  private final boolean isTeeth;
+  private final boolean isShoulder;
+  private final boolean isJoint;
+  private final String otherPain;
+
+
+  /**
+   * Constructor for MorningPainCheck
+   *
+   * @param isNeck     check neck pain
+   * @param isHeadache check headache
+   * @param isTeeth    check teeth pain
+   * @param isShoulder check shoulder pain
+   * @param isJoint    check joint pain
+   * @param otherPain  other pain
+   */
+  public MorningPainCheck(boolean isNeck, boolean isHeadache, boolean isTeeth, boolean isShoulder,
+<span class="nc" id="L46">      boolean isJoint, String otherPain) {</span>
+<span class="nc" id="L47">    this.isNeck = isNeck;</span>
+<span class="nc" id="L48">    this.isHeadache = isHeadache;</span>
+<span class="nc" id="L49">    this.isTeeth = isTeeth;</span>
+<span class="nc" id="L50">    this.isShoulder = isShoulder;</span>
+<span class="nc" id="L51">    this.isJoint = isJoint;</span>
+<span class="nc" id="L52">    this.otherPain = otherPain;</span>
+<span class="nc" id="L53">  }</span>
+
+
+  /**
+   * This method is to update or append to csv file.
+   */
+  @Override
+  public void updateOrAppendToCSV() {
+<span class="nc" id="L61">    List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+
+    try {
+<span class="nc" id="L64">      lines = Files.readAllLines(Paths.get(Constants.MORNING_PAIN_CHECK_CSV));</span>
+<span class="nc" id="L65">    } catch (IOException e) {</span>
+<span class="nc" id="L66">      System.out.println(&quot;Error reading from file&quot;);</span>
+<span class="nc" id="L67">      e.printStackTrace();</span>
+<span class="nc" id="L68">    }</span>
+
+<span class="nc" id="L70">    String newEntry = toCSV();</span>
+<span class="nc" id="L71">    boolean updated = false;</span>
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L74">      String[] values = lines.get(i).split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">      if (values[0].equals(LocalDate.now().toString())) { // assuming date is the first value in csv</span>
+<span class="nc" id="L76">        lines.set(i, newEntry); // replace old data</span>
+<span class="nc" id="L77">        updated = true;</span>
+<span class="nc" id="L78">        break;</span>
+      }
+    }
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">    if (!updated) {</span>
+<span class="nc" id="L83">      lines.add(newEntry); // if no entry was found for today's date, append new data</span>
+    }
+
+<span class="nc" id="L86">    try (BufferedWriter bw = new BufferedWriter(new FileWriter(Constants.MORNING_PAIN_CHECK_CSV))) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">      for (String line : lines) {</span>
+<span class="nc" id="L88">        bw.write(line);</span>
+<span class="nc" id="L89">        bw.newLine();</span>
+<span class="nc" id="L90">      }</span>
+<span class="nc" id="L91">    } catch (IOException e) {</span>
+<span class="nc" id="L92">      System.out.println(&quot;Error writing to file&quot;);</span>
+<span class="nc" id="L93">      e.printStackTrace();</span>
+<span class="nc" id="L94">    }</span>
+<span class="nc" id="L95">  }</span>
+
+  /**
+   * This method is to convert the input to csv format.
+   *
+   * @return the input in csv format.
+   */
+  @Override
+  public String toCSV() {
+<span class="nc" id="L104">    return String.join(&quot;,&quot;,</span>
+<span class="nc" id="L105">        LocalDate.now().toString(),</span>
+<span class="nc" id="L106">        String.valueOf(isNeck),</span>
+<span class="nc" id="L107">        String.valueOf(isHeadache),</span>
+<span class="nc" id="L108">        String.valueOf(isTeeth),</span>
+<span class="nc" id="L109">        String.valueOf(isShoulder),</span>
+<span class="nc" id="L110">        String.valueOf(isJoint),</span>
+        otherPain
+    );
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
