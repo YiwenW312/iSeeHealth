@@ -1,4 +1,6 @@
-# Final Project for CS5004 Object Oriented Design and Analysis Summer 2023
+# iSeeHealth - A Health Management System by Yiwen Wang
+
+**Final Project for CS5004 Object Oriented Design and Analysis Summer 2023**
 
 ## Introduction
 This is the final project for CS 5004 Object-Oriented Design and Analysis Summer 2023 by Yiwen Wang.
@@ -10,6 +12,10 @@ The **objectives** for this final project are:
 4. Use design patterns to raise cohesion and lower coupling as well as to avoid re-inventing the
   wheel 
 5. Meet objectives of the CS5004 course
+
+Because the original course repo is in the class organization and set as private, the following is the information from that repo:
+
+![Original info from course private repo](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/CS5004_Final%20Project_Repo.png)
 
 ## Project Design
 
@@ -368,18 +374,18 @@ classDiagram
 
 The following is the screenshots of the program:(To run the program, run main.java, and this is a gradle project created in intellij IDEA in Java)
 
-![Dashboard](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/DashboardView.png)
-![Dashboard2](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/DashboradView2.png)
-![MorningCheck-Basic&Skin](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/MoriningCheckBasicSkin.png)
-![MorningCheck-Digest](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/MorningCheckDigest.png)
-![MoriningCheck-Pain](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/MorningCheckPain.png)
-![FitnessCheck](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/FitnessCheck.png)
-![MentalCheck](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/MentalCheck.png)
-![DietCheck](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/DietCheck.png)
-![WeeklyReport](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/WeeklyReport1.png)
-![WeeklyReport with report](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/WeeklyReport2.png)
-![MonthlyReport](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/MonthlyReport1.png)
-![MonthlyReport with report](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/APP%20Preview/MonthlyReport2.png)
+![Dashboard](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/DashboardView.png)
+![Dashboard2](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/DashboradView2.png)
+![MorningCheck-Basic&Skin](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/MoriningCheckBasicSkin.png)
+![MorningCheck-Digest](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/MorningCheckDigest.png)
+![MoriningCheck-Pain](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/MorningCheckPain.png)
+![FitnessCheck](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/FitnessCheck.png)
+![MentalCheck](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/MentalCheck.png)
+![DietCheck](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/DietCheck.png)
+![WeeklyReport](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/WeeklyReport1.png)
+![WeeklyReport with report](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/WeeklyReport2.png)
+![MonthlyReport](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/MonthlyReport1.png)
+![MonthlyReport with report](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/APP%20Preview/MonthlyReport2.png)
 
 
 
@@ -387,5 +393,8 @@ The following is the screenshots of the program:(To run the program, run main.ja
 
 My project follows the Google style format and reach 70% code coverage from my testing
 on components not related to the View/Control.
-![JaCoCo Screenshot](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/Jacoco1.png)
-![JaCoCo Screenshot](https://github.com/CS5004-Summer23-Seattle/final-project-yiwen/blob/main/SampleFiles/IMG/Jacoco2.png)
+![JaCoCo Screenshot](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/Jacoco1.png)
+![JaCoCo Screenshot](https://github.com/YiwenW312/iSeeHealth/blob/main/SampleFiles/IMG/Jacoco2.png)
+
+
+Thank you for reading my project!
