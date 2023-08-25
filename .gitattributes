@@ -8,3 +8,4 @@
 *.bat           text eol=crlf
 
 *.html linguist-detectable=false
+*.js linguist-detectable=false
